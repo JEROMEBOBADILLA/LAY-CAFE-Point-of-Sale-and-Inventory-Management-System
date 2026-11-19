@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import inventoryRoutes from './routes/inventoryRoutes.js';
+import productRoutes from './routes/productRoutes.js';
+import saleRoutes from './routes/saleRoutes.js';
 
 let corsOptions = {
     origin: 'http://localhost:5173',
@@ -14,6 +16,8 @@ app.use(cors(corsOptions));
 
 
 app.use('/inventory', inventoryRoutes);
+app.use('/products', productRoutes);
+app.use('/sales', saleRoutes);
 
 
 try {

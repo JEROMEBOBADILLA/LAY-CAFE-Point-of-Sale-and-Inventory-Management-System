@@ -1,5 +1,6 @@
 
 import { useEffect, useMemo, useState } from "react";
+import "../style.css";
 
 import Header from "../Components/Header";
 import FormContainer from "../Components/FormContainer";
