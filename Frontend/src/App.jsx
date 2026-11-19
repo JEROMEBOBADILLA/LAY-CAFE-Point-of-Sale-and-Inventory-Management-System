@@ -1,8 +1,8 @@
-import "./style.css";
-import InventoryPage from "./pages/InventoryPage";
+import KitchenPage from "./pages/KitchenPage";
+import "./KitchenStyle.css";
 
 function App() {
-  return <InventoryPage />;
+  return <KitchenPage />;
 }
 
 export default App;

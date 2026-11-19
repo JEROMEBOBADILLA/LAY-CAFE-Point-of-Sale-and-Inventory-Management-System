@@ -1,0 +1,228 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap");
+
+.kitchen-page {
+  --paper: #ffffff;
+  --ink: #1a1a1a;
+  --ink-soft: #777777;
+  --line: #cfcfcf;
+  --line-faint: #e2e2e2;
+  --radius-card: 16px;
+}
+
+.kitchen-page,
+.kitchen-page * { box-sizing: border-box; }
+
+.kitchen-page {
+  min-height: 100vh;
+  padding: 24px 16px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Quicksand", system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.5;
+}
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.icon-lg {
+  width: 34px;
+  height: 34px;
+}
+
+/* ---------- Brand header ---------- */
+.brand {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.brand h1 {
+  margin: 4px 0 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+}
+
+.tagline {
+  margin: 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+}
+
+.count {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+
+/* ---------- Filters ---------- */
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--line-faint);
+}
+
+.filter {
+  padding: 8px 4px;
+  margin: 0 12px;
+  font: inherit;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+}
+
+.filter.is-active {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.filter:focus-visible,
+.order-action:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* ---------- Order cards ---------- */
+.orders {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.order-card {
+  background: var(--paper);
+  border: 1.2px solid var(--ink);
+  border-radius: var(--radius-card);
+  padding: 16px 18px;
+}
+
+.order-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.order-number {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  text-transform: lowercase;
+}
+
+.badge {
+  padding: 2px 12px;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  border: 1px solid var(--ink);
+  border-radius: 20px;
+}
+
+.badge-new {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.badge-preparing {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.order-meta {
+  margin: 4px 0 10px 30px;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  text-transform: lowercase;
+}
+
+.order-items {
+  margin: 0;
+  padding: 8px 0 0;
+  list-style: none;
+  border-top: 0.5px solid var(--line);
+  font-size: 0.92rem;
+}
+
+.order-items li {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+
+.item-qty {
+  font-weight: 600;
+}
+
+.order-action {
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px;
+  font: inherit;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1.2px solid var(--ink);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.order-action:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.order-action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- Empty state + footer ---------- */
+.empty {
+  margin: 48px 0;
+  text-align: center;
+  color: var(--ink-soft);
+}
+
+.kitchen-error {
+  margin: 0 0 18px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--ink);
+}
+
+.foot {
+  margin-top: 36px;
+  text-align: center;
+  color: var(--ink-soft);
+}
+
+.foot .icon {
+  width: 16px;
+  height: 16px;
+}
+
+.foot p {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+}
