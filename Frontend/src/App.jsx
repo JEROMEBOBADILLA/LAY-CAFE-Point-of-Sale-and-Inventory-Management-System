@@ -1,5 +1,8 @@
 import CashierPage from "./pages/CashierPage";
+import "./cashierstyle.css";
 
-export default function App() {
+function App() {
   return <CashierPage />;
 }
+
+export default App;
