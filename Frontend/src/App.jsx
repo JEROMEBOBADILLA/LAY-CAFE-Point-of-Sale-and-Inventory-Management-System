@@ -1,8 +1,5 @@
-import "./style.css";
-import InventoryPage from "./pages/InventoryPage";
+import CashierPage from "./pages/CashierPage";
 
-function App() {
-  return <InventoryPage />;
+export default function App() {
+  return <CashierPage />;
 }
-
-export default App;
