@@ -188,3 +188,136 @@
   color: #be7155;
   font-weight: 800;
 }
+
+
+/* 3.1.3 Low-Stock-Monitoring
+ * Dashboard indicators, warning badge at stock alert list.
+ * Kopya mula sa Frontend/src/style.css para sa contribution review.
+ */
+
+.stat-card.warning {
+  background: #fff9f5;
+  border-color: #f0d8c9;
+}
+
+.stat-card.warning .stat-icon {
+  background: #fce8d7;
+  color: #c77848;
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 19px;
+}
+
+.short-list {
+  padding: 8px 23px 14px;
+}
+
+.short-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 3px;
+  border-bottom: 1px solid #f2eee9;
+}
+
+.short-row:last-child {
+  border-bottom: 0;
+}
+
+.short-row>div {
+  flex: 1;
+  min-width: 0;
+}
+
+.short-row strong {
+  font-size: 12px;
+}
+
+.short-row small {
+  color: #a19990;
+  display: block;
+  margin-top: 5px;
+  font-size: 11px;
+}
+
+.short-row>b,.short-row>strong {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.item-dot {
+  height: 11px;
+  width: 11px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.item-dot.orange {
+  background: #d89b6e;
+}
+
+.item-dot.brown {
+  background: #b39a8b;
+}
+
+.stock-chip {
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.stock-chip.low {
+  color: #b96740;
+  background: #fcf0e6;
+}
+
+.welcome-strip {
+  background: #493328;
+  color: #f7e6d8;
+  margin-top: 20px;
+  border-radius: 14px;
+  padding: 24px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  font-family: 'Playfair Display',serif;
+  font-size: 20px;
+}
+
+.welcome-strip button {
+  background: #e9af83;
+  border: 0;
+  padding: 12px 16px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 700 12px 'DM Sans';
+  color: #3d2921;
+}
+
+.status-badge.danger {
+  color: #b66a42;
+  background: #fff0e3;
+}
+
+@media(max-width:1040px) {
+  .overview-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media(max-width:520px) {
+  .welcome-strip {
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 18px;
+  }
+}
