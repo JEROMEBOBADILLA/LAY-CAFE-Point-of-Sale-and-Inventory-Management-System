@@ -1,134 +1,101 @@
-
-export default function InventoryTable({
-  items,
-  loading,
-  query,
-  filter,
-  onQueryChange,
-  onFilterChange,
-  onEdit,
-  onDelete,
-}) {
-  const isLow = (item) =>
-    Number(item.quantity) <= Number(item.reorderLevel);
-
-  return (
-    <section className="lay-card lay-list">
-      <div className="lay-tools">
+import Icon from './Icon';
+import { Empty } from './UI';
+const number = v => Number(v).toLocaleString('en-PH', { maximumFractionDigits: 3 });
+// Preserved original component: inventory search, filters, and table actions.
+export default function InventoryTable({ items, allCount, loading, query, filter, onQueryChange, onFilterChange, onEdit, onDelete, onMove }) {
+  return <>
+    <div className="table-filters">
+      <div className="search-field">
+        <Icon name="search" />
         <input
           type="search"
-          placeholder="Search items"
+          placeholder="Search ingredients or supplies…"
           value={query}
-          onChange={(event) => onQueryChange(event.target.value)}
+          onChange={e => onQueryChange(e.target.value)}
         />
-
-        <div className="lay-tabs">
-          {["All", "Ingredient", "Supply"].map((category) => (
-            <button
-              key={category}
-              type="button"
-              className={filter === category ? "on" : ""}
-              onClick={() => onFilterChange(category)}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
       </div>
-
-      <div className="lay-scroll">
-        <table>
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Category</th>
-              <th className="num">Quantity</th>
-              <th className="num">Reorder at</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {loading ? (
-              <tr>
-                <td colSpan="6" className="lay-empty">
-                  Loading items...
-                </td>
-              </tr>
-            ) : items.length === 0 ? (
-              <tr>
-                <td colSpan="6" className="lay-empty">
-                  No items found.
-                </td>
-              </tr>
-            ) : (
-              items.map((item) => (
-                <tr
-                  key={item.id}
-                  className={isLow(item) ? "low" : ""}
-                >
-                  <td className="strong">{item.name}</td>
-                  <td>{item.category}</td>
-
-                  <td className="num">
-                    {Number(item.quantity)} {item.unit}
-
-                    <span className="lay-meter">
-                      <span
-                        style={{
-                          width: `${Math.max(
-                            0,
-                            Math.min(
-                              100,
-                              (Number(item.quantity) /
-                                Math.max(
-                                  Number(item.reorderLevel) * 2,
-                                  1
-                                )) *
-                                100
-                            )
-                          )}%`,
-                        }}
-                      />
-                    </span>
-                  </td>
-
-                  <td className="num">
-                    {Number(item.reorderLevel)} {item.unit}
-                  </td>
-
-                  <td>
-                    {isLow(item) ? (
-                      <span className="lay-pill">Low stock</span>
-                    ) : (
-                      "In stock"
-                    )}
-                  </td>
-
-                  <td className="lay-row-actions">
-                    <button
-                      type="button"
-                      className="lay-link"
-                      onClick={() => onEdit(item)}
-                    >
-                      Edit
-                    </button>
-
-                    <button
-                      type="button"
-                      className="lay-link danger"
-                      onClick={() => onDelete(item)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+      <div className="filter-select">
+        <Icon name="filter" size={16} />
+        <select
+          value={filter}
+          onChange={e => onFilterChange(e.target.value)}
+          aria-label="Filter inventory"
+        >
+          <option>All</option>
+          <option>Ingredient</option>
+          <option>Supply</option>
+          <option>Low stock</option>
+        </select>
       </div>
-    </section>
-  );
+    </div>
+    <div className="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Category</th>
+            <th>Available</th>
+            <th>Reorder at</th>
+            <th>Status</th>
+            <th className="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.map(item => <tr key={item.id}>
+            <td>
+              <div className="table-name">
+                <span className="table-avatar">
+                  {item.category === 'Ingredient' ? '☕' : '📦'}
+                </span>
+                <strong>
+                  {item.name}
+                </strong>
+              </div>
+            </td>
+            <td className="subtle-label">
+              {item.category}
+            </td>
+            <td>
+              <b>
+                {number(item.quantity)}
+              </b>
+              <span className="subtle-label">
+                {item.unit}
+              </span>
+            </td>
+            <td>
+              {number(item.reorderLevel)}
+              <span className="subtle-label">
+                {item.unit}
+              </span>
+            </td>
+            <td>
+              <span className={`status-badge ${Number(item.quantity) <= Number(item.reorderLevel) ? 'danger' : 'ok'}`}>
+                <span />
+                {Number(item.quantity) <= Number(item.reorderLevel) ? 'Low stock' : 'Healthy'}
+              </span>
+            </td>
+            <td>
+              <div className="table-actions">
+                <button type="button" title="Record stock movement" onClick={() => onMove(item)}><Icon name="plus" size={16} /> Stock</button>
+                <button type="button" title="Edit inventory item" onClick={() => onEdit(item)}>
+                  <Icon name="edit" size={17} />
+                </button>
+                <button type="button" title="Delete inventory item" onClick={() => onDelete(item)}>
+                  <Icon name="trash" size={16} />
+                </button>
+              </div>
+            </td>
+          </tr>)}
+        </tbody>
+      </table>
+      {loading && <div className="loading-skeleton">Loading inventory…</div>}
+      {!loading && items.length === 0 && <Empty
+        title="No matching inventory"
+        description="Try clearing your filters or add a new item."
+        icon="box"
+      />}
+    </div>
+    <div className="table-footer">Showing {items.length} of {allCount} items <span>Stock updates after each successful sale.</span></div>
+  </>;
 }

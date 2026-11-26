@@ -1,6 +1,5 @@
 /* ---------- MENU ---------- */
 // Format: [pangalan, presyo]. Ang pagkakasunod-sunod ng category ay ang pagkakasunod sa tabs.
-
 // Pasta: [pangalan, solo, share (2-3), party (4-6)]
 const PASTA = [
   ["Cheesy Garlic", 200, 390, 780],
@@ -19,7 +18,6 @@ const PASTA = [
   [`${name} (Share 2-3)`, share],
   [`${name} (Party 4-6)`, party],
 ]);
-
 const MENU = {
   "Iced Coffee": [
     ["Americano", 110],
@@ -180,7 +178,6 @@ const MENU = {
     ["Honey butter / Spicy honey butter flavor", 20],
   ],
 };
-
 // Icon na gagamitin ng bawat category
 export const CATEGORY_ICON = {
   "Iced Coffee": "Coffee",
@@ -195,9 +192,6 @@ export const CATEGORY_ICON = {
   "Pastries & Waffles": "Sweets",
   "Add-ons": "Plus",
 };
-
 // TODO (backend): palitan ng fetch("/api/products") para sa totoong data.
 let nextId = 1;
-export const PRODUCTS = Object.entries(MENU).flatMap(([category, items]) =>
-  items.map(([name, price]) => ({ id: nextId++, name, category, price }))
-);
+export const PRODUCTS = Object.entries(MENU).flatMap(([category, items]) => items.map(([name, price]) => ({ id: nextId++, name, category, price })));

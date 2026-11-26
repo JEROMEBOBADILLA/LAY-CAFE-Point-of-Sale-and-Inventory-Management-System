@@ -1,30 +1,24 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import inventoryRoutes from './routes/inventoryRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import saleRoutes from './routes/saleRoutes.js';
-
-let corsOptions = {
-    origin: 'http://localhost:5173',
-};
-//create express app
+import kitchenRoutes from './routes/kitchenRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import { requireAuth } from './middleware/auth.js';
+import handleError from './utils/handleError.js';
 const app = express();
-
-//to parse incoming data
-app.use(express.json());
-app.use(cors(corsOptions));
-
-
-app.use('/inventory', inventoryRoutes);
-app.use('/products', productRoutes);
-app.use('/sales', saleRoutes);
-
-
-try {
-    const port = 3000;
-    app.listen(port, () => {
-        console.log(`listening to port ${port}...`);
-    });
-}  catch(e) {
-    console.log(e)
-}
+app.use(cors({ origin: process.env.FRONTEND_ORIGIN?.split(',') || ['http://localhost:5173', 'http://127.0.0.1:5173'] }));
+app.use(express.json({ limit: '100kb' }));
+app.get('/health', (_req, res) => res.json({ ok: true, service: 'LayCafe API' }));
+app.use('/auth', authRoutes);
+app.use('/inventory', requireAuth('admin'), inventoryRoutes);
+app.use('/products', requireAuth('admin', 'cashier'), productRoutes);
+app.use('/sales', requireAuth('admin', 'cashier'), saleRoutes);
+app.use('/kitchen', requireAuth('kitchen', 'admin'), kitchenRoutes);
+app.use((_req, _res, next) => next(new Error('Not found')));
+app.use((err, _req, res, _next) => handleError(res, err));
+const port = Number(process.env.PORT || 3000);
+app.listen(port, () => console.log(`listening to port ${port}...`));
+export default app;
