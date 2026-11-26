@@ -1,117 +1,56 @@
-
-export default function FormContainer({
-  form,
-  editingId,
-  saving,
-  error,
-  notice,
-  onChange,
-  onSubmit,
-  onCancel,
-}) {
-  return (
-    <form className="lay-card lay-form" onSubmit={onSubmit}>
-      <h2>{editingId !== null ? "Edit item" : "Add item"}</h2>
-
-      <label>
-        Item name
-        <input
-          type="text"
-          name="name"
-          value={form.name}
-          onChange={onChange}
-          placeholder="Espresso beans"
-          required
-        />
-      </label>
-
-      <label>
-        Category
-        <select
-          name="category"
-          value={form.category}
-          onChange={onChange}
-        >
-          <option value="Ingredient">Ingredient</option>
-          <option value="Supply">Supply</option>
-        </select>
-      </label>
-
-      <div className="lay-row">
-        <label>
-          Quantity
-          <input
-            type="number"
-            name="quantity"
-            min="0"
-            step="any"
-            value={form.quantity}
-            onChange={onChange}
-            required
-          />
-        </label>
-
-        <label>
-          Unit
-          <input
-            type="text"
-            name="unit"
-            value={form.unit}
-            onChange={onChange}
-            placeholder="kg, L, pcs"
-            required
-          />
-        </label>
-      </div>
-
-      <label>
-        Reorder level
-        <input
-          type="number"
-          name="reorderLevel"
-          min="0"
-          step="any"
-          value={form.reorderLevel}
-          onChange={onChange}
-          placeholder="0"
-        />
-      </label>
-
-      {error && (
-        <p className="lay-msg lay-error" role="alert">
-          {error}
-        </p>
-      )}
-
-      {notice && (
-        <p className="lay-msg lay-ok" role="status">
-          {notice}
-        </p>
-      )}
-
-      <div className="lay-actions">
-        <button
-          type="submit"
-          className="lay-btn lay-primary"
-          disabled={saving}
-        >
-          {saving
-            ? "Saving..."
-            : editingId !== null
-              ? "Save changes"
-              : "Add item"}
-        </button>
-
-        {editingId !== null && (
-          <button
-            type="button"
-            className="lay-btn"
-            onClick={onCancel}
-          >
-            Cancel
-          </button>
-        )}
-      </div>
-    </form>
-  );
+// Preserved original component: inventory add/edit form.
+export default function FormContainer({ form, editingId, saving, error, onChange, onSubmit, onCancel }) {
+  return <form className="modal-form" onSubmit={onSubmit}>
+    <label>Item name<input
+      autoFocus
+      required
+      name="name"
+      maxLength={160}
+      value={form.name}
+      onChange={onChange}
+      placeholder="e.g. Coffee beans"
+    /></label>
+    <label>Category<select name="category" value={form.category} onChange={onChange}>
+      <option>Ingredient</option>
+      <option>Supply</option>
+    </select></label>
+    <div className="form-two">
+      <label>Current quantity<input
+        required
+        type="number"
+        name="quantity"
+        min="0"
+        step="0.001"
+        value={form.quantity}
+        onChange={onChange}
+      /></label>
+      <label>Unit<input
+        required
+        name="unit"
+        maxLength={24}
+        value={form.unit}
+        onChange={onChange}
+        placeholder="pcs / kg / L"
+      /></label>
+    </div>
+    <label>Minimum stock / reorder level<input
+      required
+      type="number"
+      name="reorderLevel"
+      min="0"
+      step="0.001"
+      value={form.reorderLevel}
+      onChange={onChange}
+    /></label>
+    <p className="form-hint">Quantity changes to an existing item are tracked as stock adjustments.</p>
+    {error && <p className="form-error" role="alert">
+      {error}
+    </p>}
+    <div className="modal-actions">
+      <button type="button" className="btn btn-outline" onClick={onCancel}>Cancel</button>
+      <button type="submit" className="btn btn-primary" disabled={saving}>
+        {saving ? 'Saving…' : editingId !== null ? 'Save changes' : 'Create item'}
+      </button>
+    </div>
+  </form>;
 }
